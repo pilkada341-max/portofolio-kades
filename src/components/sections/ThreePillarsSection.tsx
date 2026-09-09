@@ -128,13 +128,14 @@ export default function ThreePillarsSection() {
 
               {/* Icon */}
               <div
-                className="w-13 h-13 rounded-2xl flex items-center justify-center mb-5"
+                className="rounded-2xl flex items-center justify-center mb-5"
                 style={{
                   width: "3.25rem",
                   height: "3.25rem",
                   background: pillar.iconBg,
                   color: pillar.iconColor,
                   border: `1px solid ${pillar.cardBorder}`,
+                  flexShrink: 0,
                 }}
               >
                 {pillar.icon}

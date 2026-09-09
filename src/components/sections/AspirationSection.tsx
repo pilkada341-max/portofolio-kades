@@ -97,7 +97,7 @@ export default function AspirationSection() {
   };
 
   return (
-    <section id="aspirasi" className="section-padding relative overflow-hidden" style={{ backgroundColor: "#071a0f" }}>
+    <section id="aspirasi" className="section-padding relative overflow-hidden" style={{ backgroundColor: "#050d07" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}

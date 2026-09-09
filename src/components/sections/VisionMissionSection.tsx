@@ -66,8 +66,8 @@ export default function VisionMissionSection({ vision, missions }: VisionMission
         </div>
       </div>
 
-      {/* Mission part - dark background dengan inline style sebagai fallback */}
-      <div className="section-padding relative" style={{ backgroundColor: "#071a0f" }}>
+      {/* Mission part */}
+      <div className="section-padding relative" style={{ backgroundColor: "#0a1a0e" }}>
         <div
           className="absolute top-0 left-0 right-0 h-px"
           style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.2), transparent)" }}

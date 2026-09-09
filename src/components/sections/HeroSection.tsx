@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Play } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { Candidate } from "@/types/database";
 
@@ -234,12 +235,15 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
                 <div className="absolute inset-0 rounded-3xl border-2 border-emerald-500/20 animate-spin-slow" />
 
                 {/* Inner frame */}
-                <div className="absolute inset-4 rounded-2xl overflow-hidden glass-card">
+                <div className="absolute inset-4 rounded-2xl overflow-hidden glass-card relative">
                   {candidate.photo_url ? (
-                    <img
+                    <Image
                       src={candidate.photo_url}
                       alt={`Foto ${candidate.name}`}
-                      className="w-full h-full object-cover object-top"
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 640px) 288px, (max-width: 1024px) 320px, 384px"
+                      priority
                     />
                   ) : (
                     // Placeholder

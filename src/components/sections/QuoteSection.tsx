@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import type { Candidate } from "@/types/database";
 
 interface QuoteSectionProps {
@@ -22,7 +23,7 @@ export default function QuoteSection({ candidate }: QuoteSectionProps) {
 
   return (
     <section
-      className="relative overflow-hidden py-24"
+      className="section-padding relative overflow-hidden"
       style={{ backgroundColor: "#071a0f" }}
     >
       {/* Grid decoration */}
@@ -56,13 +57,15 @@ export default function QuoteSection({ candidate }: QuoteSectionProps) {
           {/* Portrait */}
           {candidate.photo_url && (
             <div
-              className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-8"
+              className="relative w-20 h-20 rounded-full overflow-hidden mx-auto mb-8"
               style={{ border: "4px solid rgba(16,185,129,0.3)", boxShadow: "0 0 24px rgba(16,185,129,0.2)" }}
             >
-              <img
+              <Image
                 src={candidate.photo_url}
                 alt={candidate.name}
-                className="w-full h-full object-cover object-top"
+                fill
+                className="object-cover object-top"
+                sizes="80px"
               />
             </div>
           )}
@@ -70,9 +73,9 @@ export default function QuoteSection({ candidate }: QuoteSectionProps) {
           {/* Opening quote */}
           <div
             className="font-display font-bold leading-none select-none mb-2"
-            style={{ fontSize: "6rem", lineHeight: 1, color: "rgba(16,185,129,0.15)" }}
+            style={{ fontSize: "5rem", lineHeight: 1, color: "rgba(16,185,129,0.15)" }}
           >
-            "
+            &ldquo;
           </div>
 
           <blockquote

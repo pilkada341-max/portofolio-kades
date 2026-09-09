@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { GraduationCap, Briefcase, Users, Heart } from "lucide-react";
 import type { Candidate } from "@/types/database";
 
@@ -106,20 +107,22 @@ export default function ProfileSection({ candidate }: ProfileSectionProps) {
         </div>
 
         {/* Layout: foto kiri, info kanan */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start max-w-5xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start max-w-5xl mx-auto">
 
           {/* Kolom foto */}
-          <div className="w-full lg:w-64 shrink-0 flex flex-col items-center lg:items-start">
+          <div className="w-full lg:w-72 shrink-0 flex flex-col items-center lg:items-start">
             {/* Foto */}
             <div
-              className="relative rounded-2xl overflow-hidden border w-48 h-60 sm:w-56 sm:h-72 lg:w-64 lg:h-80"
+              className="relative rounded-2xl overflow-hidden border w-56 h-72 sm:w-64 sm:h-80 lg:w-72 lg:h-96 mx-auto lg:mx-0"
               style={{ borderColor: "rgba(16,185,129,0.2)" }}
             >
               {candidate.photo_url ? (
-                <img
+                <Image
                   src={candidate.photo_url}
                   alt={`Foto ${candidate.name}`}
-                  className="w-full h-full object-cover object-top"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 640px) 224px, (max-width: 1024px) 256px, 288px"
                 />
               ) : (
                 <div
@@ -145,7 +148,7 @@ export default function ProfileSection({ candidate }: ProfileSectionProps) {
 
             {/* Info singkat */}
             <div
-              className="mt-4 w-48 sm:w-56 lg:w-64 rounded-2xl p-4"
+              className="mt-4 w-56 sm:w-64 lg:w-72 rounded-2xl p-4 mx-auto lg:mx-0"
               style={{
                 background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -171,7 +174,7 @@ export default function ProfileSection({ candidate }: ProfileSectionProps) {
           {/* Kolom info */}
           <div className="flex-1 min-w-0">
             {/* Bio */}
-            <p className="text-white/70 leading-relaxed text-sm sm:text-base mb-6">
+            <p className="text-white/70 leading-relaxed text-sm sm:text-base mb-6 max-w-2xl">
               {candidate.bio ||
                 "Putra daerah yang telah lama mengabdi kepada masyarakat desa dengan penuh dedikasi dan komitmen untuk membawa perubahan nyata."}
             </p>
@@ -186,17 +189,19 @@ export default function ProfileSection({ candidate }: ProfileSectionProps) {
               }}
             >
               <p className="text-white/85 italic text-sm leading-relaxed">
-                {candidate.quote ||
-                  '"Kepemimpinan bukan tentang berada di depan masyarakat, tetapi tentang berjalan bersama masyarakat."'}
+                {candidate.quote
+                  ? candidate.quote.replace(/^[""\u201c\u201d]|[""\u201c\u201d]$/g, "")
+                  : "Kepemimpinan bukan tentang berada di depan masyarakat, tetapi tentang berjalan bersama masyarakat."}
               </p>
             </div>
 
             {/* Tab info */}
-            <div className="space-y-3">
+            <div className="space-y-3" role="list">
               {tabs.map((tab) => (
                 <div
                   key={tab.id}
-                  className="rounded-2xl p-4"
+                  role="listitem"
+                  className="rounded-2xl p-4 sm:p-5"
                   style={{
                     background: "rgba(255,255,255,0.04)",
                     border: "1px solid rgba(255,255,255,0.08)",
@@ -207,10 +212,10 @@ export default function ProfileSection({ candidate }: ProfileSectionProps) {
                     style={{ color: "#34d399" }}
                   >
                     {tab.icon}
-                    <span>{tab.label}</span>
+                    <span className="uppercase tracking-wider">{tab.label}</span>
                   </div>
                   {tab.data.length > 0 ? (
-                    <div className="space-y-2.5">
+                    <div className="space-y-3">
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                       {(tab.data as any[]).map((item, i) => tab.render(item, i))}
                     </div>
