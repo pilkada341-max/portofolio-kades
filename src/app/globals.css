@@ -57,7 +57,7 @@
 }
 
 /* =============================================
-   BASE
+   BASE RESET
    ============================================= */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -67,6 +67,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -76,6 +77,37 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+/* Reset button — penting untuk Tailwind v4 */
+button, [role="button"] {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Reset input/select/textarea */
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Reset a */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Custom scrollbar */
