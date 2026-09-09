@@ -48,8 +48,11 @@ function AnimatedNumber({ target, prefix = "" }: { target: number; prefix?: stri
 
 export default function TransparencySection({ budget }: TransparencySectionProps) {
   return (
-    <section className="section-padding bg-forest-950 relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+    <section className="section-padding relative overflow-hidden" style={{ backgroundColor: "#050d07" }}>
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)" }}
+      />
       <div className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `radial-gradient(ellipse at 30% 50%, rgba(59, 130, 246, 0.4) 0%, transparent 50%)`,

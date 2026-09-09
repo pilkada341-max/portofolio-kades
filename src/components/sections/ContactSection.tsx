@@ -58,8 +58,11 @@ export default function ContactSection({ candidate }: ContactSectionProps) {
   ].filter((c) => c.value);
 
   return (
-    <section id="kontak" className="section-padding bg-forest-950 relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+    <section id="kontak" className="section-padding relative overflow-hidden" style={{ backgroundColor: "#050d07" }}>
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.3), transparent)" }}
+      />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">

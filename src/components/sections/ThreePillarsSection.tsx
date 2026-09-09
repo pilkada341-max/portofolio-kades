@@ -11,12 +11,11 @@ const pillars = [
     description:
       "Pelayanan desa harus dekat, mudah, cepat, dan tidak berbelit-belit. Masyarakat berhak mendapat layanan terbaik tanpa hambatan birokrasi yang rumit.",
     icon: <Zap size={28} />,
-    color: "emerald",
-    gradient: "from-emerald-500/20 to-emerald-600/5",
-    border: "border-emerald-500/20",
-    iconBg: "bg-emerald-500/10",
-    iconText: "text-emerald-400",
-    accent: "text-emerald-400",
+    cardBg: "linear-gradient(to bottom, rgba(16,185,129,0.12), rgba(5,150,105,0.03))",
+    cardBorder: "rgba(16,185,129,0.2)",
+    iconBg: "rgba(16,185,129,0.1)",
+    iconColor: "#34d399",
+    titleColor: "#34d399",
   },
   {
     number: "02",
@@ -25,12 +24,11 @@ const pillars = [
     description:
       "Pemuda harus diberikan ruang untuk berkembang, berdiskusi, berkreasi, dan menyampaikan aspirasi. Suara generasi muda adalah bagian dari masa depan desa.",
     icon: <Users size={28} />,
-    color: "gold",
-    gradient: "from-gold-500/20 to-gold-600/5",
-    border: "border-gold-500/20",
-    iconBg: "bg-gold-500/10",
-    iconText: "text-gold-400",
-    accent: "text-gold-400",
+    cardBg: "linear-gradient(to bottom, rgba(245,158,11,0.12), rgba(217,119,6,0.03))",
+    cardBorder: "rgba(245,158,11,0.2)",
+    iconBg: "rgba(245,158,11,0.1)",
+    iconColor: "#fbbf24",
+    titleColor: "#fbbf24",
   },
   {
     number: "03",
@@ -39,12 +37,11 @@ const pillars = [
     description:
       "Pengelolaan desa harus transparan, amanah, dan dapat diketahui masyarakat. Uang desa adalah hak masyarakat untuk tahu penggunaannya.",
     icon: <Eye size={28} />,
-    color: "blue",
-    gradient: "from-blue-500/20 to-blue-600/5",
-    border: "border-blue-500/20",
-    iconBg: "bg-blue-500/10",
-    iconText: "text-blue-400",
-    accent: "text-blue-400",
+    cardBg: "linear-gradient(to bottom, rgba(59,130,246,0.12), rgba(37,99,235,0.03))",
+    cardBorder: "rgba(59,130,246,0.2)",
+    iconBg: "rgba(59,130,246,0.1)",
+    iconColor: "#60a5fa",
+    titleColor: "#60a5fa",
   },
 ];
 
@@ -57,7 +54,7 @@ export default function ThreePillarsSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = itemRefs.current.findIndex((ref) => ref === entry.target);
+            const index = itemRefs.current.findIndex((r) => r === entry.target);
             if (index !== -1) {
               setTimeout(() => {
                 setVisibleItems((prev) => [...new Set([...prev, index])]);
@@ -66,75 +63,99 @@ export default function ThreePillarsSection() {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
-
-    itemRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
+    itemRefs.current.forEach((ref) => { if (ref) observer.observe(ref); });
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="section-padding bg-forest-950 relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-30"
+    <section
+      className="section-padding relative overflow-hidden"
+      style={{ backgroundColor: "#050d07" }}
+    >
+      {/* Background glows */}
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
-            radial-gradient(ellipse at 80% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 40%)
+            radial-gradient(ellipse at 20% 50%, rgba(16,185,129,0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 50%, rgba(245,158,11,0.04) 0%, transparent 50%)
           `,
         }}
       />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)" }}
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block text-white/30 text-xs font-semibold uppercase tracking-[0.3em] mb-4">
+        <div className="text-center mb-14">
+          <span
+            className="inline-block text-xs font-semibold uppercase"
+            style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em" }}
+          >
             Tiga Pilar Komunikasi
           </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
-            Nilai yang Kami <span className="gradient-text-emerald">Perjuangkan</span>
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-3">
+            Nilai yang Kami{" "}
+            <span className="gradient-text-emerald">Perjuangkan</span>
           </h2>
         </div>
 
-        {/* Pillars grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
           {pillars.map((pillar, index) => (
             <div
               key={pillar.number}
               ref={(el) => { itemRefs.current[index] = el; }}
-              className={`
-                relative rounded-3xl p-7 border bg-gradient-to-b ${pillar.gradient} ${pillar.border}
-                transition-all duration-700
-                ${visibleItems.includes(index) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-              `}
+              className="relative rounded-3xl p-6 transition-all duration-700"
+              style={{
+                background: pillar.cardBg,
+                border: `1px solid ${pillar.cardBorder}`,
+                opacity: visibleItems.includes(index) ? 1 : 0,
+                transform: visibleItems.includes(index) ? "translateY(0)" : "translateY(24px)",
+              }}
             >
               {/* Number watermark */}
               <span
-                className="absolute top-5 right-6 font-display font-bold text-6xl leading-none select-none"
+                className="absolute top-4 right-5 font-display font-bold text-6xl leading-none select-none pointer-events-none"
                 style={{ color: "rgba(255,255,255,0.04)" }}
               >
                 {pillar.number}
               </span>
 
               {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${pillar.iconBg} ${pillar.iconText}`}>
+              <div
+                className="w-13 h-13 rounded-2xl flex items-center justify-center mb-5"
+                style={{
+                  width: "3.25rem",
+                  height: "3.25rem",
+                  background: pillar.iconBg,
+                  color: pillar.iconColor,
+                  border: `1px solid ${pillar.cardBorder}`,
+                }}
+              >
                 {pillar.icon}
               </div>
 
               {/* Title */}
-              <h3 className={`font-display font-bold text-3xl mb-1 ${pillar.accent}`}>
+              <h3
+                className="font-display font-bold text-2xl mb-1"
+                style={{ color: pillar.titleColor }}
+              >
                 {pillar.title}
               </h3>
-              <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-4">
+              <p
+                className="text-xs font-semibold uppercase mb-4"
+                style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.12em" }}
+              >
                 {pillar.subtitle}
               </p>
 
               {/* Description */}
-              <p className="text-white/60 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
                 {pillar.description}
               </p>
             </div>

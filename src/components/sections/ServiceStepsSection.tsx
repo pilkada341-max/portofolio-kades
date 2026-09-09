@@ -49,25 +49,37 @@ export default function ServiceStepsSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="section-padding bg-stone-50 relative overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      className="section-padding relative overflow-hidden"
+      style={{ backgroundColor: "#0a1a0e" }}
+    >
+      {/* Separator */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.2), transparent)" }}
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="inline-block text-emerald-600 text-xs font-semibold uppercase tracking-widest mb-3">
+          <span
+            className="inline-block text-xs font-semibold uppercase"
+            style={{ color: "#34d399", letterSpacing: "0.2em" }}
+          >
             Cara Kerja
           </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-stone-900">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-2">
             Layanan Desa dari{" "}
-            <span className="text-emerald-600">Rumah Anda</span>
+            <span className="gradient-text-emerald">Rumah Anda</span>
           </h2>
-          <p className="text-stone-500 mt-3 text-sm max-w-lg mx-auto">
+          <p className="mt-3 text-sm max-w-lg mx-auto" style={{ color: "rgba(255,255,255,0.5)" }}>
             Proses pengajuan layanan administrasi desa yang simpel, cepat, dan dapat dipantau secara real-time.
           </p>
         </div>
@@ -75,50 +87,57 @@ export default function ServiceStepsSection() {
         {/* Steps */}
         <div
           ref={ref}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
         >
           {steps.map((step, index) => (
             <div
               key={step.number}
-              className={`
-                relative bg-white rounded-2xl p-6 border border-stone-100 shadow-sm
-                hover:border-emerald-200 hover:shadow-md transition-all duration-300
-                ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
-              `}
+              className="relative rounded-2xl p-5 transition-all duration-500"
               style={{
-                transitionDelay: visible ? `${index * 80}ms` : "0ms",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(16px)",
+                transitionDelay: `${index * 80}ms`,
               }}
             >
-              {/* Connector arrow — desktop only */}
-              {index < steps.length - 1 && (index + 1) % 3 !== 0 && (
-                <div className="hidden lg:block absolute top-8 -right-3 z-10">
-                  <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
-                    <path d="M0 6H20M20 6L14 1M20 6L14 11" stroke="#d1fae5" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </div>
-              )}
-
               <div className="flex items-start gap-4">
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                  style={{
+                    background: "rgba(16,185,129,0.1)",
+                    border: "1px solid rgba(16,185,129,0.2)",
+                    color: "#34d399",
+                  }}
+                >
                   {step.icon}
                 </div>
 
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-emerald-400/60 font-mono text-xs font-bold">{step.number}</span>
+                    <span
+                      className="font-mono text-xs font-bold"
+                      style={{ color: "rgba(52,211,153,0.5)" }}
+                    >
+                      {step.number}
+                    </span>
                   </div>
-                  <h3 className="text-stone-800 font-semibold text-base mb-1">{step.title}</h3>
-                  <p className="text-stone-500 text-xs leading-relaxed">{step.description}</p>
+                  <h3 className="text-white font-semibold text-sm mb-1">{step.title}</h3>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    {step.description}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Note */}
-        <p className="text-center text-stone-400 text-xs mt-8 max-w-md mx-auto">
-          * Alur layanan final akan disesuaikan dengan sistem yang tersedia. Dapat diakses langsung di kantor desa jika lebih nyaman.
+        <p
+          className="text-center text-xs mt-8 max-w-md mx-auto"
+          style={{ color: "rgba(255,255,255,0.25)" }}
+        >
+          * Alur layanan final akan disesuaikan dengan sistem yang tersedia di kantor desa.
         </p>
       </div>
     </section>

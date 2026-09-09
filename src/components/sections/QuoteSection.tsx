@@ -13,49 +13,52 @@ export default function QuoteSection({ candidate }: QuoteSectionProps) {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.3 }
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.2 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-stone-50 py-24">
-      {/* Decorative background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              90deg,
-              #059669 0px,
-              #059669 1px,
-              transparent 1px,
-              transparent 60px
-            ), repeating-linear-gradient(
-              0deg,
-              #059669 0px,
-              #059669 1px,
-              transparent 1px,
-              transparent 60px
-            )`,
-          }}
-        />
-      </div>
+    <section
+      className="relative overflow-hidden py-24"
+      style={{ backgroundColor: "#071a0f" }}
+    >
+      {/* Grid decoration */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `repeating-linear-gradient(90deg, rgba(16,185,129,0.04) 0px, rgba(16,185,129,0.04) 1px, transparent 1px, transparent 60px),
+            repeating-linear-gradient(0deg, rgba(16,185,129,0.04) 0px, rgba(16,185,129,0.04) 1px, transparent 1px, transparent 60px)`,
+        }}
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Top/bottom separator */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.25), transparent)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.15), transparent)" }}
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
         <div
           ref={ref}
-          className={`max-w-3xl mx-auto text-center transition-all duration-1000 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className="max-w-3xl mx-auto text-center transition-all duration-1000"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(32px)",
+          }}
         >
           {/* Portrait */}
           {candidate.photo_url && (
-            <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-emerald-100 shadow-lg mx-auto mb-8">
+            <div
+              className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-8"
+              style={{ border: "4px solid rgba(16,185,129,0.3)", boxShadow: "0 0 24px rgba(16,185,129,0.2)" }}
+            >
               <img
                 src={candidate.photo_url}
                 alt={candidate.name}
@@ -64,23 +67,31 @@ export default function QuoteSection({ candidate }: QuoteSectionProps) {
             </div>
           )}
 
-          {/* Quote mark */}
-          <div className="text-emerald-200 font-display text-8xl leading-none mb-2 select-none">
+          {/* Opening quote */}
+          <div
+            className="font-display font-bold leading-none select-none mb-2"
+            style={{ fontSize: "6rem", lineHeight: 1, color: "rgba(16,185,129,0.15)" }}
+          >
             "
           </div>
 
-          <blockquote className="text-stone-800 font-display font-semibold text-xl sm:text-2xl lg:text-3xl leading-relaxed mb-8">
-            {candidate.quote?.replace(/^[""]|[""]$/g, "") ||
+          <blockquote
+            className="font-display font-semibold text-xl sm:text-2xl lg:text-3xl leading-relaxed mb-8"
+            style={{ color: "rgba(255,255,255,0.9)" }}
+          >
+            {candidate.quote?.replace(/^[""\u201c\u201d]|[""\u201c\u201d]$/g, "") ||
               "Desa yang maju bukan hanya tentang pembangunan fisik, tetapi tentang masyarakat yang merasa dilayani, didengar, dan dilibatkan."}
           </blockquote>
 
-          <div className="flex items-center justify-center gap-3">
-            <div className="h-px w-12 bg-emerald-300" />
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-px w-12" style={{ background: "rgba(52,211,153,0.4)" }} />
             <div>
-              <p className="text-stone-800 font-semibold text-sm">{candidate.name}</p>
-              <p className="text-stone-500 text-xs">Calon Kepala Desa {candidate.village_name}</p>
+              <p className="text-white font-semibold text-sm">{candidate.name}</p>
+              <p className="text-xs mt-0.5" style={{ color: "rgba(52,211,153,0.6)" }}>
+                Calon Kepala Desa {candidate.village_name}
+              </p>
             </div>
-            <div className="h-px w-12 bg-emerald-300" />
+            <div className="h-px w-12" style={{ background: "rgba(52,211,153,0.4)" }} />
           </div>
         </div>
       </div>

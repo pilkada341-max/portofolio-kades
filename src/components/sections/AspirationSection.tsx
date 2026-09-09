@@ -97,38 +97,51 @@ export default function AspirationSection() {
   };
 
   return (
-    <section id="aspirasi" className="section-padding bg-stone-50 relative overflow-hidden">
+    <section id="aspirasi" className="section-padding relative overflow-hidden" style={{ backgroundColor: "#071a0f" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto mb-5">
-              <MessageSquare size={24} className="text-emerald-600" />
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
+              style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.2)" }}
+            >
+              <MessageSquare size={24} style={{ color: "#34d399" }} />
             </div>
-            <span className="inline-block text-emerald-600 text-xs font-semibold uppercase tracking-widest mb-3">
+            <span
+              className="inline-block text-xs font-semibold uppercase"
+              style={{ color: "#34d399", letterSpacing: "0.2em" }}
+            >
               Aspirasi Masyarakat
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-stone-900">
-              Suara Anda <span className="text-emerald-600">Penting</span>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-2">
+              Suara Anda <span className="gradient-text-emerald">Penting</span>
             </h2>
-            <p className="text-stone-500 mt-3 text-sm">
+            <p className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
               Sampaikan aspirasi, masukan, atau harapan Anda untuk desa. Setiap aspirasi akan dibaca dan dipertimbangkan dengan serius.
             </p>
           </div>
 
           {/* Success state */}
           {submitState === "success" ? (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-3xl p-10 text-center">
-              <CheckCircle2 size={48} className="text-emerald-500 mx-auto mb-4" />
-              <h3 className="text-emerald-800 font-display font-bold text-xl mb-2">
+            <div
+              className="rounded-3xl p-10 text-center"
+              style={{
+                background: "rgba(16,185,129,0.08)",
+                border: "1px solid rgba(16,185,129,0.25)",
+              }}
+            >
+              <CheckCircle2 size={48} style={{ color: "#34d399" }} className="mx-auto mb-4" />
+              <h3 className="text-white font-display font-bold text-xl mb-2">
                 Aspirasi Terkirim!
               </h3>
-              <p className="text-emerald-600 text-sm mb-6">
+              <p className="text-sm mb-6" style={{ color: "rgba(52,211,153,0.8)" }}>
                 Terima kasih telah menyampaikan aspirasi Anda. Aspirasi Anda akan diproses dan dipertimbangkan.
               </p>
               <button
                 onClick={() => setSubmitState("idle")}
-                className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-2xl transition-colors text-sm"
+                className="px-6 py-3 text-white font-semibold rounded-2xl text-sm transition-colors"
+                style={{ background: "#059669" }}
               >
                 Kirim Aspirasi Lagi
               </button>
@@ -136,76 +149,84 @@ export default function AspirationSection() {
           ) : (
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-5"
+              className="rounded-3xl p-6 sm:p-8 space-y-5"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
               noValidate
             >
               {/* Name */}
               <div>
-                <label htmlFor="aspiration-name" className="block text-sm font-medium text-stone-700 mb-1.5">
-                  Nama <span className="text-red-500">*</span>
+                <label
+                  htmlFor="aspiration-name"
+                  className="block text-sm font-medium mb-1.5"
+                  style={{ color: "rgba(255,255,255,0.7)" }}
+                >
+                  Nama <span style={{ color: "#f87171" }}>*</span>
                 </label>
                 <input
                   id="aspiration-name"
                   type="text"
                   placeholder="Nama Anda"
                   {...register("name")}
-                  className={cn(
-                    "form-input",
-                    errors.name && "border-red-300 focus:ring-red-400"
-                  )}
+                  className="form-input-dark"
+                  style={errors.name ? { borderColor: "rgba(248,113,113,0.5)" } : {}}
                   autoComplete="name"
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                  <p className="text-xs mt-1" style={{ color: "#f87171" }}>{errors.name.message}</p>
                 )}
               </div>
 
               {/* Category */}
               <div>
-                <label htmlFor="aspiration-category" className="block text-sm font-medium text-stone-700 mb-1.5">
-                  Kategori <span className="text-red-500">*</span>
+                <label
+                  htmlFor="aspiration-category"
+                  className="block text-sm font-medium mb-1.5"
+                  style={{ color: "rgba(255,255,255,0.7)" }}
+                >
+                  Kategori <span style={{ color: "#f87171" }}>*</span>
                 </label>
                 <select
                   id="aspiration-category"
                   {...register("category")}
-                  className={cn(
-                    "form-input bg-white cursor-pointer",
-                    errors.category && "border-red-300 focus:ring-red-400"
-                  )}
+                  className="form-input-dark cursor-pointer"
+                  style={{ background: "#0a1a0e" }}
                 >
                   {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value}>
+                    <option key={cat.value} value={cat.value} style={{ background: "#0a1a0e" }}>
                       {cat.label}
                     </option>
                   ))}
                 </select>
                 {errors.category && (
-                  <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>
+                  <p className="text-xs mt-1" style={{ color: "#f87171" }}>{errors.category.message}</p>
                 )}
               </div>
 
               {/* Message */}
               <div>
-                <label htmlFor="aspiration-message" className="block text-sm font-medium text-stone-700 mb-1.5">
-                  Aspirasi <span className="text-red-500">*</span>
+                <label
+                  htmlFor="aspiration-message"
+                  className="block text-sm font-medium mb-1.5"
+                  style={{ color: "rgba(255,255,255,0.7)" }}
+                >
+                  Aspirasi <span style={{ color: "#f87171" }}>*</span>
                 </label>
                 <textarea
                   id="aspiration-message"
                   rows={5}
                   placeholder="Tuliskan aspirasi, masukan, atau harapan Anda untuk desa..."
                   {...register("message")}
-                  className={cn(
-                    "form-input resize-none",
-                    errors.message && "border-red-300 focus:ring-red-400"
-                  )}
+                  className="form-input-dark resize-none"
+                  style={errors.message ? { borderColor: "rgba(248,113,113,0.5)" } : {}}
                 />
                 <div className="flex justify-between items-center mt-1">
                   {errors.message ? (
-                    <p className="text-red-500 text-xs">{errors.message.message}</p>
-                  ) : (
-                    <span />
-                  )}
-                  <span className="text-stone-400 text-xs">
+                    <p className="text-xs" style={{ color: "#f87171" }}>{errors.message.message}</p>
+                  ) : <span />}
+                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
                     {messageValue.length}/1000
                   </span>
                 </div>
@@ -219,20 +240,23 @@ export default function AspirationSection() {
                     {...register("consent")}
                     className="mt-0.5 w-4 h-4 accent-emerald-600"
                   />
-                  <span className="text-stone-500 text-xs leading-relaxed">
+                  <span className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
                     Saya menyetujui bahwa data yang saya berikan akan digunakan untuk keperluan aspirasi dan komunikasi terkait program desa. Data tidak akan disebarluaskan tanpa izin.
                   </span>
                 </label>
                 {errors.consent && (
-                  <p className="text-red-500 text-xs mt-1">{errors.consent.message}</p>
+                  <p className="text-xs mt-1" style={{ color: "#f87171" }}>{errors.consent.message}</p>
                 )}
               </div>
 
               {/* Error */}
               {submitState === "error" && (
-                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl">
-                  <AlertCircle size={16} className="text-red-500 shrink-0" />
-                  <p className="text-red-600 text-sm">{errorMessage}</p>
+                <div
+                  className="flex items-center gap-2 p-3 rounded-xl"
+                  style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)" }}
+                >
+                  <AlertCircle size={16} style={{ color: "#f87171" }} className="shrink-0" />
+                  <p className="text-sm" style={{ color: "#f87171" }}>{errorMessage}</p>
                 </div>
               )}
 
@@ -240,12 +264,11 @@ export default function AspirationSection() {
               <button
                 type="submit"
                 disabled={submitState === "loading"}
-                className={cn(
-                  "w-full py-4 px-6 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-200",
-                  submitState === "loading"
-                    ? "bg-emerald-300 text-white cursor-not-allowed"
-                    : "bg-emerald-600 hover:bg-emerald-500 text-white hover:shadow-lg hover:-translate-y-0.5"
-                )}
+                className="w-full py-4 px-6 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-200 text-white"
+                style={{
+                  background: submitState === "loading" ? "rgba(16,185,129,0.4)" : "#059669",
+                  cursor: submitState === "loading" ? "not-allowed" : "pointer",
+                }}
               >
                 {submitState === "loading" ? (
                   <>
@@ -260,7 +283,7 @@ export default function AspirationSection() {
                 )}
               </button>
 
-              <p className="text-stone-400 text-xs text-center">
+              <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.25)" }}>
                 Aspirasi akan dimoderasi sebelum ditampilkan secara publik.
               </p>
             </form>

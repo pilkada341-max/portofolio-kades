@@ -3,7 +3,7 @@ import { Leaf, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-forest-950 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#050d07" }}>
       <div
         className="absolute inset-0"
         style={{

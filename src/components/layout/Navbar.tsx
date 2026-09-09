@@ -132,9 +132,10 @@ export default function Navbar() {
         {/* Panel */}
         <div
           className={cn(
-            "absolute top-0 right-0 h-full w-72 bg-forest-950 border-l border-emerald-900/50 shadow-2xl transition-transform duration-300",
+            "absolute top-0 right-0 h-full w-72 shadow-2xl transition-transform duration-300",
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           )}
+          style={{ backgroundColor: "#050d07", borderLeft: "1px solid rgba(6,78,59,0.5)" }}
         >
           <div className="flex flex-col h-full p-6 pt-20">
             <div className="flex flex-col gap-1">

@@ -40,15 +40,18 @@ export default function GallerySection({ gallery }: GallerySectionProps) {
     );
 
   return (
-    <section id="galeri" className="section-padding bg-stone-50 relative overflow-hidden">
+    <section id="galeri" className="section-padding relative overflow-hidden" style={{ backgroundColor: "#0a1a0e" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block text-emerald-600 text-xs font-semibold uppercase tracking-widest mb-3">
+          <span
+            className="inline-block text-xs font-semibold uppercase"
+            style={{ color: "#34d399", letterSpacing: "0.2em" }}
+          >
             Galeri
           </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-stone-900">
-            Dokumentasi <span className="text-emerald-600">Kegiatan</span>
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-2">
+            Dokumentasi <span className="gradient-text-emerald">Kegiatan</span>
           </h2>
         </div>
 
@@ -58,12 +61,16 @@ export default function GallerySection({ gallery }: GallerySectionProps) {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 activeCategory === cat.id
-                  ? "bg-emerald-600 text-white shadow-md"
-                  : "bg-white text-stone-600 border border-stone-200 hover:border-emerald-300 hover:text-emerald-600"
-              )}
+                  ? "text-white"
+                  : "text-white/50 hover:text-white"
+              }`}
+              style={
+                activeCategory === cat.id
+                  ? { background: "#059669" }
+                  : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }
+              }
             >
               {cat.label}
             </button>
@@ -106,7 +113,7 @@ export default function GallerySection({ gallery }: GallerySectionProps) {
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-stone-400">Belum ada foto di kategori ini.</p>
+            <p style={{ color: "rgba(255,255,255,0.3)" }}>Belum ada foto di kategori ini.</p>
           </div>
         )}
       </div>

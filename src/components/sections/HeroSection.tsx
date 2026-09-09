@@ -127,7 +127,8 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
     <section
       id="beranda"
       ref={heroRef}
-      className="relative min-h-screen flex items-center overflow-hidden bg-forest-950"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ backgroundColor: "#050d07" }}
     >
       {/* Background */}
       <div className="absolute inset-0">
@@ -239,7 +240,10 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
                     />
                   ) : (
                     // Placeholder
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-emerald-950 to-forest-950">
+                    <div
+                      className="w-full h-full flex flex-col items-center justify-center"
+                      style={{ background: "linear-gradient(to bottom, #022c22, #050d07)" }}
+                    >
                       <div className="w-32 h-32 rounded-full bg-emerald-500/20 border-2 border-emerald-500/30 flex items-center justify-center mb-4">
                         <span className="text-4xl">👤</span>
                       </div>

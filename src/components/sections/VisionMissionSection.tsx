@@ -19,13 +19,16 @@ export default function VisionMissionSection({ vision, missions }: VisionMission
   return (
     <section id="visi-misi" className="relative overflow-hidden">
       {/* Vision part - dark */}
-      <div className="bg-forest-950 section-padding relative">
+      <div className="section-padding relative" style={{ backgroundColor: "#050d07" }}>
         <div className="absolute inset-0"
           style={{
             background: `radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 70%)`,
           }}
         />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.3), transparent)" }}
+        />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -63,9 +66,12 @@ export default function VisionMissionSection({ vision, missions }: VisionMission
         </div>
       </div>
 
-      {/* Mission part - slightly lighter */}
-      <div className="bg-emerald-950/20 section-padding relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/20 to-transparent" />
+      {/* Mission part - dark background dengan inline style sebagai fallback */}
+      <div className="section-padding relative" style={{ backgroundColor: "#071a0f" }}>
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.2), transparent)" }}
+        />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-14">
