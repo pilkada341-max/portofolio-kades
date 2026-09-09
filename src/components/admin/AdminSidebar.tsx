@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
-  Leaf,
   User,
   Eye,
   Award,
@@ -21,14 +20,14 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/admin", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
-  { href: "/admin/profil", label: "Profil Calon", icon: <User size={18} /> },
-  { href: "/admin/visi-misi", label: "Visi & Misi", icon: <Eye size={18} /> },
-  { href: "/admin/program", label: "Program", icon: <Award size={18} /> },
-  { href: "/admin/timeline", label: "Timeline", icon: <Clock size={18} /> },
-  { href: "/admin/galeri", label: "Galeri", icon: <Image size={18} /> },
-  { href: "/admin/aspirasi", label: "Aspirasi", icon: <MessageSquare size={18} /> },
-  { href: "/admin/apbdes", label: "APBDes", icon: <DollarSign size={18} /> },
+  { href: "/admin",           label: "Dashboard",    icon: <LayoutDashboard size={16} /> },
+  { href: "/admin/profil",    label: "Profil Calon", icon: <User size={16} /> },
+  { href: "/admin/visi-misi", label: "Visi & Misi",  icon: <Eye size={16} /> },
+  { href: "/admin/program",   label: "Program",      icon: <Award size={16} /> },
+  { href: "/admin/timeline",  label: "Timeline",     icon: <Clock size={16} /> },
+  { href: "/admin/galeri",    label: "Galeri",       icon: <Image size={16} /> },
+  { href: "/admin/aspirasi",  label: "Aspirasi",     icon: <MessageSquare size={16} /> },
+  { href: "/admin/apbdes",    label: "APBDes",       icon: <DollarSign size={16} /> },
 ];
 
 export default function AdminSidebar() {
@@ -46,14 +45,26 @@ export default function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-5 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-            <Leaf size={16} className="text-white" />
+      <div
+        className="px-5 py-5 relative"
+        style={{ borderBottom: "1px solid rgba(230,57,70,0.15)" }}
+      >
+        {/* Top accent */}
+        <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: "#e63946" }} />
+        <div className="flex items-center gap-3">
+          {/* Diamond logo */}
+          <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
+            <div
+              className="absolute inset-0 rotate-45"
+              style={{ border: "1.5px solid #e63946", borderRadius: "0.15rem" }}
+            />
+            <span className="font-display font-black text-xs relative z-10" style={{ color: "#e63946" }}>
+              A
+            </span>
           </div>
           <div>
-            <p className="text-white font-semibold text-sm">Admin Panel</p>
-            <p className="text-white/30 text-xs">Portofolio Kades</p>
+            <p className="text-white font-bold text-sm uppercase tracking-wider">Admin Panel</p>
+            <p className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.3)" }}>Portofolio Kades</p>
           </div>
         </div>
       </div>
@@ -68,13 +79,16 @@ export default function AdminSidebar() {
               href={item.href}
               onClick={() => setIsOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
-                isActive
-                  ? "bg-emerald-500/20 text-emerald-400"
-                  : "text-white/60 hover:text-white hover:bg-white/5"
+                "flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-all duration-200 relative",
+                isActive ? "text-white" : "text-white/45 hover:text-white/75"
               )}
+              style={{
+                background: isActive ? "rgba(230,57,70,0.1)" : "transparent",
+                borderLeft: isActive ? "2px solid #e63946" : "2px solid transparent",
+                borderRadius: "0 0.375rem 0.375rem 0",
+              }}
             >
-              {item.icon}
+              <span style={{ color: isActive ? "#e63946" : "inherit" }}>{item.icon}</span>
               <span>{item.label}</span>
             </Link>
           );
@@ -82,12 +96,15 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="p-3 border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+      <div className="p-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/60 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-all duration-200 text-white/40 hover:text-red-400 rounded"
+          style={{ background: "transparent" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(230,57,70,0.08)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
         >
-          <LogOut size={18} />
+          <LogOut size={16} />
           <span>Keluar</span>
         </button>
       </div>
@@ -97,21 +114,35 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-56 border-r min-h-screen sticky top-0" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
+      <aside
+        className="hidden lg:flex flex-col w-56 min-h-screen sticky top-0"
+        style={{
+          backgroundColor: "#0d0d14",
+          borderRight: "1px solid rgba(255,255,255,0.06)",
+        }}
+      >
         <SidebarContent />
       </aside>
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 border-b px-4 py-3 flex items-center justify-between" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-emerald-500 rounded-lg flex items-center justify-center">
-            <Leaf size={14} className="text-white" />
+      <div
+        className="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-3 flex items-center justify-between"
+        style={{
+          backgroundColor: "rgba(13,13,20,0.95)",
+          borderBottom: "1px solid rgba(230,57,70,0.15)",
+          backdropFilter: "blur(20px)",
+        }}
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-7 h-7 flex items-center justify-center">
+            <div className="absolute inset-0 rotate-45" style={{ border: "1.5px solid #e63946", borderRadius: "0.15rem" }} />
+            <span className="font-display font-black text-xs relative z-10" style={{ color: "#e63946" }}>A</span>
           </div>
-          <span className="text-white font-semibold text-sm">Admin Panel</span>
+          <span className="text-white font-bold text-sm uppercase tracking-wider">Admin</span>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+          className="text-white p-1.5 rounded transition-colors hover:bg-white/10"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -122,10 +153,16 @@ export default function AdminSidebar() {
       {isOpen && (
         <>
           <div
-            className="lg:hidden fixed inset-0 z-30 bg-black/60"
+            className="lg:hidden fixed inset-0 z-30 bg-black/70 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
-          <aside className="lg:hidden fixed left-0 top-0 bottom-0 z-40 w-56 border-r" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
+          <aside
+            className="lg:hidden fixed left-0 top-0 bottom-0 z-40 w-56"
+            style={{
+              backgroundColor: "#0d0d14",
+              borderRight: "1px solid rgba(230,57,70,0.15)",
+            }}
+          >
             <SidebarContent />
           </aside>
         </>

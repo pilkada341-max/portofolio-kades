@@ -2,12 +2,11 @@
 
 import { Shield, Users, Eye } from "lucide-react";
 import type { Vision, Mission } from "@/types/database";
-import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, React.ReactNode> = {
-  shield: <Shield size={28} />,
-  users: <Users size={28} />,
-  eye: <Eye size={28} />,
+  shield: <Shield size={24} />,
+  users:  <Users size={24} />,
+  eye:    <Eye size={24} />,
 };
 
 interface VisionMissionSectionProps {
@@ -18,45 +17,43 @@ interface VisionMissionSectionProps {
 export default function VisionMissionSection({ vision, missions }: VisionMissionSectionProps) {
   return (
     <section id="visi-misi" className="relative overflow-hidden">
-      {/* Vision part - dark */}
-      <div className="section-padding relative" style={{ backgroundColor: "#050d07" }}>
-        <div className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 70%)`,
-          }}
-        />
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: "linear-gradient(to right, transparent, rgba(16,185,129,0.3), transparent)" }}
-        />
+
+      {/* ── VISI ── */}
+      <div className="section-padding relative" style={{ backgroundColor: "#07070a" }}>
+        <div className="absolute inset-0 pointer-events-none">
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(230,57,70,0.06) 0%, transparent 70%)" }} />
+          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(230,57,70,0.3), transparent)" }} />
+        </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="inline-block text-emerald-400/60 text-xs font-semibold uppercase tracking-[0.3em] mb-8">
-              Visi
-            </span>
+          <div className="max-w-4xl">
+            <div className="section-label mb-6">Visi</div>
 
-            <div className="relative">
-              {/* Decorative quotes */}
-              <span className="absolute -top-8 -left-4 text-emerald-500/10 font-display text-[120px] leading-none select-none hidden sm:block">
+            {/* Big quote */}
+            <div className="relative pl-6" style={{ borderLeft: "3px solid #e63946" }}>
+              <span
+                className="absolute -top-6 -left-2 font-display font-black leading-none select-none hidden sm:block"
+                style={{ fontSize: "6rem", lineHeight: 1, color: "rgba(230,57,70,0.08)" }}
+              >
                 "
               </span>
-              <blockquote className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white leading-tight">
-                <span className="gradient-text-emerald">
-                  {vision?.content || 'Mewujudkan Desa yang maju, transparan, mandiri, dan sejahtera dengan pelayanan yang dekat dengan masyarakat.'}
-                </span>
+              <blockquote className="font-display font-black text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white leading-tight uppercase">
+                {vision?.content || 'Mewujudkan Desa yang maju, transparan, mandiri, dan sejahtera dengan pelayanan yang dekat dengan masyarakat.'}
               </blockquote>
-              <span className="absolute -bottom-16 -right-4 text-emerald-500/10 font-display text-[120px] leading-none select-none hidden sm:block">
-                "
-              </span>
             </div>
 
             {/* Pillar badges */}
-            <div className="flex flex-wrap justify-center gap-3 mt-16">
+            <div className="flex flex-wrap gap-3 mt-12">
               {["Maju", "Transparan", "Mandiri", "Sejahtera"].map((word) => (
                 <span
                   key={word}
-                  className="px-5 py-2 rounded-full border border-emerald-500/30 text-emerald-400 text-sm font-medium glass"
+                  className="px-5 py-2 text-sm font-bold uppercase tracking-widest"
+                  style={{
+                    background: "rgba(230,57,70,0.08)",
+                    border: "1px solid rgba(230,57,70,0.25)",
+                    borderRadius: "0.25rem",
+                    color: "#e63946",
+                  }}
                 >
                   {word}
                 </span>
@@ -66,73 +63,56 @@ export default function VisionMissionSection({ vision, missions }: VisionMission
         </div>
       </div>
 
-      {/* Mission part */}
-      <div className="section-padding relative" style={{ backgroundColor: "#0a1a0e" }}>
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.2), transparent)" }}
-        />
+      {/* ── MISI ── */}
+      <div className="section-padding relative" style={{ backgroundColor: "#0d0d14" }}>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.2), transparent)" }} />
+        </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-14">
-            <span
-              className="inline-block text-xs font-semibold uppercase"
-              style={{ color: "rgba(251,191,36,0.7)", letterSpacing: "0.25em" }}
-            >
-              Misi
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
+          <div className="mb-14">
+            <div className="section-label-gold mb-3">Misi</div>
+            <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase">
               Tiga Pilar <span className="gradient-text-gold">Kepemimpinan</span>
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {missions.length > 0 ? missions.map((mission, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl">
+            {(missions.length > 0 ? missions : [
+              { id: "1", title: "Pelayanan", icon: "shield", description: "Memberikan pelayanan desa yang cepat, mudah, gratis, dan dekat dengan masyarakat.", order_number: 1 },
+              { id: "2", title: "Pemuda",    icon: "users",  description: "Membangun ruang bagi pemuda untuk berkembang, berdiskusi, berkreasi, dan menyampaikan aspirasi.", order_number: 2 },
+              { id: "3", title: "Transparansi", icon: "eye", description: "Mendorong pemerintahan desa yang terbuka, amanah, dan dapat dipertanggungjawabkan.", order_number: 3 },
+            ] as Mission[]).map((mission, index) => (
               <div
                 key={mission.id}
-                className="glass-card rounded-3xl p-7 hover:border-emerald-500/30 transition-all duration-300 group hover:-translate-y-1"
+                className="p-7 transition-all duration-300 group hover:-translate-y-1 relative"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "0.5rem",
+                }}
               >
-                {/* Number */}
+                {/* Top accent on hover */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-0.5 rounded-t opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: "linear-gradient(to right, #e63946, #f59e0b)" }}
+                />
+
                 <div className="flex items-start justify-between mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500/20 transition-colors">
-                    {iconMap[mission.icon] || <Shield size={28} />}
+                  <div
+                    className="w-12 h-12 rounded flex items-center justify-center group-hover:bg-red-500/20 transition-colors"
+                    style={{ background: "rgba(230,57,70,0.08)", color: "#e63946", border: "1px solid rgba(230,57,70,0.2)" }}
+                  >
+                    {iconMap[mission.icon] || <Shield size={24} />}
                   </div>
-                  <span className="text-white/10 font-display font-bold text-5xl leading-none">
+                  <span className="font-display font-black text-5xl leading-none" style={{ color: "rgba(255,255,255,0.04)" }}>
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-
-                <h3 className="text-white font-display font-bold text-xl mb-3">
-                  {mission.title}
-                </h3>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  {mission.description}
-                </p>
+                <h3 className="text-white font-display font-black text-xl mb-3 uppercase">{mission.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{mission.description}</p>
               </div>
-            )) : (
-              // Placeholder cards
-              [{
-                num: "01", title: "Pelayanan", icon: "shield",
-                desc: "Memberikan pelayanan desa yang cepat, mudah, gratis, dan dekat dengan masyarakat.",
-              }, {
-                num: "02", title: "Pemuda", icon: "users",
-                desc: "Membangun ruang bagi pemuda untuk berkembang, berdiskusi, berkreasi, dan menyampaikan aspirasi.",
-              }, {
-                num: "03", title: "Transparansi", icon: "eye",
-                desc: "Mendorong pemerintahan desa yang terbuka, amanah, dan dapat dipertanggungjawabkan.",
-              }].map((m) => (
-                <div key={m.num} className="glass-card rounded-3xl p-7 hover:border-emerald-500/30 transition-all duration-300 group hover:-translate-y-1">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                      {iconMap[m.icon]}
-                    </div>
-                    <span className="text-white/10 font-display font-bold text-5xl leading-none">{m.num}</span>
-                  </div>
-                  <h3 className="text-white font-display font-bold text-xl mb-3">{m.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{m.desc}</p>
-                </div>
-              ))
-            )}
+            ))}
           </div>
         </div>
       </div>

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -23,8 +22,6 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Update active section based on scroll position
       const sections = navLinks.map((l) => l.href.slice(1));
       for (const section of sections.reverse()) {
         const el = document.getElementById(section);
@@ -37,17 +34,13 @@ export default function Navbar() {
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
     const id = href.slice(1);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
 
@@ -56,61 +49,78 @@ export default function Navbar() {
       <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          isScrolled
-            ? "navbar-glass py-3 shadow-lg"
-            : "navbar-transparent py-5"
+          isScrolled ? "navbar-glass py-3 shadow-lg" : "navbar-transparent py-5"
         )}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
+
             {/* Logo */}
             <button
               onClick={() => scrollToSection("#beranda")}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-3 group"
             >
-              <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center group-hover:bg-emerald-400 transition-colors">
-                <Leaf className="w-4 h-4 text-white" />
+              {/* Geometric logo mark */}
+              <div className="relative w-9 h-9 flex items-center justify-center">
+                <div
+                  className="absolute inset-0 rotate-45 border-2 group-hover:border-red-400 transition-colors"
+                  style={{ borderColor: "#e63946" }}
+                />
+                <span
+                  className="font-display font-black text-xs relative z-10"
+                  style={{ color: "#e63946" }}
+                >
+                  {(process.env.NEXT_PUBLIC_CANDIDATE_NAME || "K")[0].toUpperCase()}
+                </span>
               </div>
-              <span className="text-white font-display font-bold text-sm sm:text-base tracking-wide">
+              <span className="text-white font-display font-bold text-sm tracking-widest uppercase hidden sm:block">
                 {process.env.NEXT_PUBLIC_CANDIDATE_NAME || "[Nama Calon]"}
               </span>
             </button>
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                    activeSection === link.href.slice(1)
-                      ? "text-emerald-400 bg-emerald-500/10"
-                      : "text-white/80 hover:text-white hover:bg-white/5"
-                  )}
-                >
-                  {link.label}
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.slice(1);
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => scrollToSection(link.href)}
+                    className={cn(
+                      "relative px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all duration-200",
+                      isActive ? "text-white" : "text-white/50 hover:text-white/80"
+                    )}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <span
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full"
+                        style={{ background: "#e63946" }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* CTA Desktop */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* CTA */}
+            <div className="hidden lg:flex items-center">
               <button
-                onClick={() => scrollToSection("#program")}
-                className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm rounded-xl transition-all duration-200 hover:shadow-emerald"
+                onClick={() => scrollToSection("#aspirasi")}
+                className="px-6 py-2.5 text-white font-bold text-xs uppercase tracking-widest rounded transition-all duration-200 hover:opacity-90"
+                style={{ background: "#e63946" }}
               >
-                Kenali Program
+                Sampaikan Aspirasi
               </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="lg:hidden text-white p-2 rounded hover:bg-white/10 transition-colors"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -123,44 +133,46 @@ export default function Navbar() {
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setIsMenuOpen(false)}
-        />
-
-        {/* Panel */}
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsMenuOpen(false)} />
         <div
           className={cn(
             "absolute top-0 right-0 h-full w-72 shadow-2xl transition-transform duration-300",
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           )}
-          style={{ backgroundColor: "#050d07", borderLeft: "1px solid rgba(6,78,59,0.5)" }}
+          style={{ backgroundColor: "#0d0d14", borderLeft: "1px solid rgba(230,57,70,0.2)" }}
         >
           <div className="flex flex-col h-full p-6 pt-20">
+            {/* Red accent line at top */}
+            <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: "#e63946" }} />
+
             <div className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className={cn(
-                    "text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
-                    activeSection === link.href.slice(1)
-                      ? "text-emerald-400 bg-emerald-500/10"
-                      : "text-white/80 hover:text-white hover:bg-white/5"
-                  )}
-                >
-                  {link.label}
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.slice(1);
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => scrollToSection(link.href)}
+                    className={cn(
+                      "text-left px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all duration-200",
+                      isActive
+                        ? "text-white"
+                        : "text-white/40 hover:text-white/70"
+                    )}
+                    style={isActive ? { borderLeft: "2px solid #e63946", paddingLeft: "1.25rem" } : {}}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="mt-auto">
               <button
-                onClick={() => scrollToSection("#program")}
-                className="w-full px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-xl transition-colors"
+                onClick={() => scrollToSection("#aspirasi")}
+                className="w-full py-3 text-white font-bold text-xs uppercase tracking-widest rounded transition-colors"
+                style={{ background: "#e63946" }}
               >
-                Kenali Program
+                Sampaikan Aspirasi
               </button>
             </div>
           </div>

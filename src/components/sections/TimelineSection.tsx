@@ -29,40 +29,27 @@ export default function TimelineSection({ timelines }: TimelineSectionProps) {
   }, [timelines]);
 
   return (
-    <section
-      className="section-padding relative overflow-hidden"
-      style={{ backgroundColor: "#050d07" }}
-    >
-      {/* Background accent */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 80% 50%, rgba(245,158,11,0.04) 0%, transparent 50%)",
-        }}
-      />
+    <section className="section-padding relative overflow-hidden" style={{ backgroundColor: "#0d0d14" }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 80% 50%, rgba(245,158,11,0.04) 0%, transparent 50%)" }} />
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-14">
-          <span
-            className="inline-block text-xs font-semibold uppercase"
-            style={{ color: "#fbbf24", letterSpacing: "0.2em" }}
-          >
-            Perjalanan
-          </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-2">
-            Jejak Pengabdian
+        <div className="mb-14">
+          <div className="section-label-gold mb-3">Perjalanan</div>
+          <h2 className="font-display font-black text-3xl sm:text-4xl text-white uppercase">
+            Jejak <span className="gradient-text-gold">Pengabdian</span>
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl">
           <div className="relative">
-            {/* Center vertical line */}
+            {/* Center line */}
             <div
               className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-px hidden sm:block"
-              style={{
-                background: "linear-gradient(to bottom, transparent, rgba(16,185,129,0.35), transparent)",
-              }}
+              style={{ background: "linear-gradient(to bottom, transparent, rgba(230,57,70,0.3), transparent)" }}
             />
 
             <div className="space-y-8 sm:space-y-12">
@@ -73,59 +60,46 @@ export default function TimelineSection({ timelines }: TimelineSectionProps) {
                   className={cn(
                     "relative flex flex-col sm:flex-row gap-4 sm:gap-8 transition-all duration-500",
                     index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse",
-                    activeIndex !== null && activeIndex >= index ? "opacity-100" : "opacity-40"
+                    activeIndex !== null && activeIndex >= index ? "opacity-100" : "opacity-30"
                   )}
                 >
-                  {/* Content card */}
-                  <div className="sm:w-[calc(50%-2rem)] flex flex-col">
+                  {/* Card */}
+                  <div className="sm:w-[calc(50%-2rem)]">
                     <button
-                      className="text-left rounded-2xl p-5 transition-all duration-300"
+                      className="text-left w-full p-5 transition-all duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: activeIndex === index
-                          ? "1px solid rgba(16,185,129,0.4)"
-                          : "1px solid rgba(255,255,255,0.08)",
-                        backdropFilter: "blur(20px)",
-                        boxShadow: activeIndex === index
-                          ? "0 0 20px rgba(16,185,129,0.1)"
-                          : "none",
+                        background: activeIndex === index ? "rgba(230,57,70,0.06)" : "rgba(255,255,255,0.03)",
+                        border: activeIndex === index ? "1px solid rgba(230,57,70,0.35)" : "1px solid rgba(255,255,255,0.07)",
+                        borderRadius: "0.5rem",
+                        boxShadow: activeIndex === index ? "0 0 20px rgba(230,57,70,0.1)" : "none",
                       }}
                       onClick={() => setActiveIndex(index === activeIndex ? null : index)}
                     >
-                      <span
-                        className="font-mono font-bold text-sm block mb-1.5"
-                        style={{ color: "#34d399" }}
-                      >
+                      {activeIndex === index && (
+                        <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t" style={{ background: "#e63946" }} />
+                      )}
+                      <span className="font-mono font-bold text-sm block mb-1.5" style={{ color: "#e63946" }}>
                         {item.year}
                       </span>
-                      <h3 className="text-white font-semibold text-base mb-1">{item.title}</h3>
-                      <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      <h3 className="text-white font-bold text-sm mb-1 uppercase">{item.title}</h3>
+                      <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
                         {item.description}
                       </p>
                     </button>
                   </div>
 
-                  {/* Center dot */}
+                  {/* Dot */}
                   <div className="hidden sm:flex absolute left-1/2 top-6 -translate-x-1/2 items-center justify-center">
                     <div
-                      className="w-4 h-4 rounded-full transition-all duration-300"
+                      className="w-3 h-3 rounded-full transition-all duration-300"
                       style={
                         activeIndex === index
-                          ? {
-                              background: "#10b981",
-                              border: "2px solid #34d399",
-                              boxShadow: "0 0 12px rgba(16,185,129,0.6)",
-                              transform: "scale(1.3)",
-                            }
-                          : {
-                              background: "#050d07",
-                              border: "2px solid rgba(16,185,129,0.4)",
-                            }
+                          ? { background: "#e63946", border: "2px solid #ff6b62", boxShadow: "0 0 12px rgba(230,57,70,0.7)", transform: "scale(1.4)" }
+                          : { background: "#07070a", border: "2px solid rgba(230,57,70,0.35)" }
                       }
                     />
                   </div>
 
-                  {/* Spacer opposite side */}
                   <div className="hidden sm:block sm:w-[calc(50%-2rem)]" />
                 </div>
               ))}
@@ -133,16 +107,12 @@ export default function TimelineSection({ timelines }: TimelineSectionProps) {
           </div>
 
           {/* End badge */}
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-start mt-12">
             <div
-              className="px-6 py-3 rounded-full"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(16,185,129,0.3)",
-                backdropFilter: "blur(12px)",
-              }}
+              className="px-6 py-3 rounded"
+              style={{ background: "rgba(230,57,70,0.08)", border: "1px solid rgba(230,57,70,0.25)" }}
             >
-              <span className="font-semibold text-sm" style={{ color: "#34d399" }}>
+              <span className="font-bold text-xs uppercase tracking-widest" style={{ color: "#e63946" }}>
                 2026 — Maju Sebagai Calon Kepala Desa
               </span>
             </div>
