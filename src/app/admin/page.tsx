@@ -30,6 +30,7 @@ export default async function AdminDashboard() {
       href: "/admin/galeri",
       color: "text-purple-400",
       bg: "bg-purple-500/10",
+      inlineStyle: undefined as React.CSSProperties | undefined,
     },
     {
       label: "Total Aspirasi",
@@ -38,14 +39,16 @@ export default async function AdminDashboard() {
       href: "/admin/aspirasi",
       color: "text-blue-400",
       bg: "bg-blue-500/10",
+      inlineStyle: undefined as React.CSSProperties | undefined,
     },
     {
       label: "Aspirasi Pending",
       value: pendingAsp.count || 0,
       icon: <Users size={20} />,
       href: "/admin/aspirasi",
-      color: "text-gold-400",
-      bg: "bg-gold-500/10",
+      color: "",
+      bg: "",
+      inlineStyle: { backgroundColor: "rgba(245,158,11,0.1)", color: "#fbbf24" } as React.CSSProperties,
     },
   ];
 
@@ -59,7 +62,7 @@ export default async function AdminDashboard() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-forest-950">
+    <div className="flex min-h-screen" style={{ backgroundColor: "#050d07" }}>
       <AdminSidebar />
 
       <main className="flex-1 p-6 lg:p-8 mt-14 lg:mt-0">
@@ -79,7 +82,7 @@ export default async function AdminDashboard() {
             <Link key={stat.label} href={stat.href}>
               <div className="glass-card rounded-2xl p-5 hover:border-emerald-500/30 transition-all duration-200 group cursor-pointer">
                 <div className="flex items-center justify-between mb-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color}`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color}`} style={stat.inlineStyle}>
                     {stat.icon}
                   </div>
                   <TrendingUp size={14} className="text-white/20 group-hover:text-emerald-400 transition-colors" />

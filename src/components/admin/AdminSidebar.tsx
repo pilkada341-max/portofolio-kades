@@ -46,7 +46,7 @@ export default function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/10">
+      <div className="px-5 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
             <Leaf size={16} className="text-white" />
@@ -82,7 +82,7 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="p-3 border-t border-white/10">
+      <div className="p-3 border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/60 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
@@ -97,12 +97,12 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-56 bg-forest-950 border-r border-white/10 min-h-screen sticky top-0">
+      <aside className="hidden lg:flex flex-col w-56 border-r min-h-screen sticky top-0" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
         <SidebarContent />
       </aside>
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-forest-950 border-b border-white/10 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 border-b px-4 py-3 flex items-center justify-between" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-emerald-500 rounded-lg flex items-center justify-center">
             <Leaf size={14} className="text-white" />
@@ -125,7 +125,7 @@ export default function AdminSidebar() {
             className="lg:hidden fixed inset-0 z-30 bg-black/60"
             onClick={() => setIsOpen(false)}
           />
-          <aside className="lg:hidden fixed left-0 top-0 bottom-0 z-40 w-56 bg-forest-950 border-r border-white/10">
+          <aside className="lg:hidden fixed left-0 top-0 bottom-0 z-40 w-56 border-r" style={{ backgroundColor: "#050d07", borderColor: "rgba(255,255,255,0.1)" }}>
             <SidebarContent />
           </aside>
         </>

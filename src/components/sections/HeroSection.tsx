@@ -132,7 +132,10 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
     >
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/80 via-forest-950 to-forest-950" />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to bottom right, rgba(2,44,34,0.8), #050d07, #050d07)" }}
+        />
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -254,7 +257,10 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
                   )}
 
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest-950/60 via-transparent to-transparent" />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(5,13,7,0.6), transparent, transparent)" }}
+                  />
                 </div>
 
                 {/* Floating badge */}
@@ -270,7 +276,7 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
                     key={i}
                     className={cn(
                       "absolute w-1.5 h-1.5 rounded-full",
-                      i % 2 === 0 ? "bg-emerald-400" : "bg-gold-400"
+                      i % 2 === 0 ? "bg-emerald-400" : "bg-yellow-400"
                     )}
                     style={{
                       top: `${15 + i * 14}%`,
@@ -289,7 +295,7 @@ export default function HeroSection({ candidate }: HeroSectionProps) {
                 <span className="text-emerald-400 text-xs font-bold">MUDAH</span>
               </div>
               <div className="absolute -right-4 top-1/2 glass-card px-3 py-2 rounded-xl hidden sm:block">
-                <span className="text-gold-400 text-xs font-bold">BERDAYA</span>
+                <span className="text-xs font-bold" style={{ color: "#fbbf24" }}>BERDAYA</span>
               </div>
               <div className="absolute -left-4 top-2/3 glass-card px-3 py-2 rounded-xl hidden sm:block">
                 <span className="text-blue-400 text-xs font-bold">TERBUKA</span>

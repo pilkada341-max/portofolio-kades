@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-forest-950 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#050d07" }}>
       {/* Background */}
       <div
         className="absolute inset-0"

@@ -98,7 +98,12 @@ export default function GallerySection({ gallery }: GallerySectionProps) {
                     loading="lazy"
                   />
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-emerald-950/0 group-hover:bg-emerald-950/50 transition-all duration-300 flex items-end">
+                  <div
+                    className="absolute inset-0 transition-all duration-300 flex items-end"
+                    style={{ background: "rgba(5,13,7,0)" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(5,13,7,0.55)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(5,13,7,0)")}
+                  >
                     <div className="w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                       <p className="text-white text-sm font-medium">{item.caption}</p>
                       <span className="text-emerald-300 text-xs capitalize">{item.category}</span>

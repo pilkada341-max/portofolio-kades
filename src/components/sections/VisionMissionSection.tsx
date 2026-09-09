@@ -75,7 +75,10 @@ export default function VisionMissionSection({ vision, missions }: VisionMission
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-14">
-            <span className="inline-block text-gold-400/70 text-xs font-semibold uppercase tracking-[0.3em] mb-3">
+            <span
+              className="inline-block text-xs font-semibold uppercase"
+              style={{ color: "rgba(251,191,36,0.7)", letterSpacing: "0.25em" }}
+            >
               Misi
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">

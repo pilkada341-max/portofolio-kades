@@ -8,8 +8,8 @@ import { createClient } from "@/lib/supabase/client";
 import { cn, formatDate } from "@/lib/utils";
 import type { Aspiration, AspirationStatus } from "@/types/database";
 
-const statusConfig: Record<AspirationStatus, { label: string; color: string; icon: React.ReactNode }> = {
-  pending: { label: "Menunggu", color: "text-gold-400 bg-gold-500/10", icon: <Clock size={12} /> },
+const statusConfig: Record<AspirationStatus, { label: string; color: string; style?: React.CSSProperties; icon: React.ReactNode }> = {
+  pending: { label: "Menunggu", color: "", style: { color: "#fbbf24", backgroundColor: "rgba(245,158,11,0.1)" }, icon: <Clock size={12} /> },
   reviewed: { label: "Ditinjau", color: "text-emerald-400 bg-emerald-500/10", icon: <CheckCircle2 size={12} /> },
   archived: { label: "Diarsipkan", color: "text-white/40 bg-white/5", icon: <Archive size={12} /> },
 };
@@ -61,7 +61,7 @@ export default function AdminAspirasiPage() {
       : aspirations.filter((a) => a.status === filterStatus);
 
   return (
-    <div className="flex min-h-screen bg-forest-950">
+    <div className="flex min-h-screen" style={{ backgroundColor: "#050d07" }}>
       <AdminSidebar />
 
       <main className="flex-1 p-6 lg:p-8 mt-14 lg:mt-0">
@@ -118,7 +118,7 @@ export default function AdminAspirasiPage() {
                     <span className="px-2 py-0.5 rounded-full bg-white/5 text-white/50 text-xs capitalize">
                       {asp.category}
                     </span>
-                    <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-full text-xs", statusConfig[asp.status].color)}>
+                    <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-full text-xs", statusConfig[asp.status].color)} style={statusConfig[asp.status].style}>
                       {statusConfig[asp.status].icon}
                       {statusConfig[asp.status].label}
                     </span>
@@ -152,7 +152,8 @@ export default function AdminAspirasiPage() {
                   {asp.status !== "pending" && (
                     <button
                       onClick={() => updateStatus(asp.id, "pending")}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-gold-500/10 text-gold-400 rounded-lg text-xs hover:bg-gold-500/20 transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors"
+                      style={{ backgroundColor: "rgba(245,158,11,0.1)", color: "#fbbf24" }}
                     >
                       <Clock size={12} />
                       Set Pending

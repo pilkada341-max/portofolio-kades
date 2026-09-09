@@ -109,14 +109,14 @@ export default function AdminAPBDesPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-forest-950 items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: "#050d07" }}>
         <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-forest-950">
+    <div className="flex min-h-screen" style={{ backgroundColor: "#050d07" }}>
       <AdminSidebar />
 
       <main className="flex-1 p-6 lg:p-8 mt-14 lg:mt-0">

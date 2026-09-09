@@ -86,7 +86,7 @@ export default function AdminGaleriPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-forest-950">
+    <div className="flex min-h-screen" style={{ backgroundColor: "#050d07" }}>
       <AdminSidebar />
 
       <main className="flex-1 p-6 lg:p-8 mt-14 lg:mt-0">
@@ -114,7 +114,8 @@ export default function AdminGaleriPage() {
               <select
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value as GalleryCategory)}
-                className="form-input-dark bg-forest-950 cursor-pointer"
+                className="form-input-dark cursor-pointer"
+                style={{ backgroundColor: "#050d07" }}
               >
                 {categories.map((cat) => (
                   <option key={cat.value} value={cat.value}>

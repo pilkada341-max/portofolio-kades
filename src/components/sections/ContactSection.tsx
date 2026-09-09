@@ -52,8 +52,8 @@ export default function ContactSection({ candidate }: ContactSectionProps) {
       label: "Email",
       value: candidate.email,
       href: candidate.email ? `mailto:${candidate.email}` : null,
-      color: "text-gold-400",
-      bg: "bg-gold-500/10",
+      color: "text-yellow-400",
+      bg: "bg-yellow-500/10",
     },
   ].filter((c) => c.value);
 
