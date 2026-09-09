@@ -165,66 +165,311 @@ ALTER TABLE budget ENABLE ROW LEVEL SECURITY;
 ALTER TABLE budget_allocations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE budget_documents ENABLE ROW LEVEL SECURITY;
 
--- Public read access for most tables
-CREATE POLICY "Public read candidates" ON candidates FOR SELECT USING (true);
-CREATE POLICY "Public read vision" ON vision FOR SELECT USING (true);
-CREATE POLICY "Public read missions" ON missions FOR SELECT USING (true);
-CREATE POLICY "Public read programs" ON programs FOR SELECT USING (true);
-CREATE POLICY "Public read timelines" ON timelines FOR SELECT USING (true);
-CREATE POLICY "Public read gallery" ON gallery FOR SELECT USING (true);
-CREATE POLICY "Public read budget" ON budget FOR SELECT USING (true);
-CREATE POLICY "Public read budget_allocations" ON budget_allocations FOR SELECT USING (true);
-CREATE POLICY "Public read budget_documents" ON budget_documents FOR SELECT USING (true);
+-- =============================================
+-- PUBLIC READ POLICIES (SELECT only)
+-- =============================================
+CREATE POLICY "Public read candidates"
+  ON candidates FOR SELECT USING (true);
 
--- Only show public/reviewed aspirations to public
-CREATE POLICY "Public read public aspirations" ON aspirations
-  FOR SELECT USING (is_public = true AND status = 'reviewed');
+CREATE POLICY "Public read vision"
+  ON vision FOR SELECT USING (true);
 
--- Allow anonymous to insert aspirations (with rate limiting handled at app level)
-CREATE POLICY "Anyone can insert aspirations" ON aspirations
-  FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public read missions"
+  ON missions FOR SELECT USING (true);
 
--- Admin full access (authenticated users)
-CREATE POLICY "Admin full access candidates" ON candidates
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access vision" ON vision
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access missions" ON missions
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access programs" ON programs
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access timelines" ON timelines
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access gallery" ON gallery
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access aspirations" ON aspirations
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access budget" ON budget
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access budget_allocations" ON budget_allocations
-  FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access budget_documents" ON budget_documents
-  FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Public read programs"
+  ON programs FOR SELECT USING (true);
+
+CREATE POLICY "Public read timelines"
+  ON timelines FOR SELECT USING (true);
+
+CREATE POLICY "Public read gallery"
+  ON gallery FOR SELECT USING (true);
+
+CREATE POLICY "Public read budget"
+  ON budget FOR SELECT USING (true);
+
+CREATE POLICY "Public read budget_allocations"
+  ON budget_allocations FOR SELECT USING (true);
+
+CREATE POLICY "Public read budget_documents"
+  ON budget_documents FOR SELECT USING (true);
+
+-- Aspirasi: hanya tampilkan yang sudah disetujui admin
+CREATE POLICY "Public read public aspirations"
+  ON aspirations FOR SELECT
+  USING (is_public = true AND status = 'reviewed');
+
+-- =============================================
+-- PUBLIC INSERT POLICY (aspirasi saja)
+-- WITH CHECK digunakan untuk INSERT, bukan USING
+-- =============================================
+CREATE POLICY "Anyone can insert aspirations"
+  ON aspirations FOR INSERT
+  WITH CHECK (true);
+
+-- =============================================
+-- ADMIN POLICIES — pisahkan SELECT, INSERT, UPDATE, DELETE
+-- Karena FOR ALL dengan USING saja tidak valid untuk INSERT
+-- =============================================
+
+-- candidates
+CREATE POLICY "Admin select candidates"
+  ON candidates FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert candidates"
+  ON candidates FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update candidates"
+  ON candidates FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete candidates"
+  ON candidates FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- vision
+CREATE POLICY "Admin select vision"
+  ON vision FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert vision"
+  ON vision FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update vision"
+  ON vision FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete vision"
+  ON vision FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- missions
+CREATE POLICY "Admin select missions"
+  ON missions FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert missions"
+  ON missions FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update missions"
+  ON missions FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete missions"
+  ON missions FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- programs
+CREATE POLICY "Admin select programs"
+  ON programs FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert programs"
+  ON programs FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update programs"
+  ON programs FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete programs"
+  ON programs FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- timelines
+CREATE POLICY "Admin select timelines"
+  ON timelines FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert timelines"
+  ON timelines FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update timelines"
+  ON timelines FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete timelines"
+  ON timelines FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- gallery
+CREATE POLICY "Admin select gallery"
+  ON gallery FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert gallery"
+  ON gallery FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update gallery"
+  ON gallery FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete gallery"
+  ON gallery FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- aspirations
+CREATE POLICY "Admin select aspirations"
+  ON aspirations FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert aspirations"
+  ON aspirations FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update aspirations"
+  ON aspirations FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete aspirations"
+  ON aspirations FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- budget
+CREATE POLICY "Admin select budget"
+  ON budget FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert budget"
+  ON budget FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update budget"
+  ON budget FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete budget"
+  ON budget FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- budget_allocations
+CREATE POLICY "Admin select budget_allocations"
+  ON budget_allocations FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert budget_allocations"
+  ON budget_allocations FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update budget_allocations"
+  ON budget_allocations FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete budget_allocations"
+  ON budget_allocations FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- budget_documents
+CREATE POLICY "Admin select budget_documents"
+  ON budget_documents FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin insert budget_documents"
+  ON budget_documents FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin update budget_documents"
+  ON budget_documents FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Admin delete budget_documents"
+  ON budget_documents FOR DELETE
+  USING (auth.role() = 'authenticated');
 
 -- =============================================
 -- STORAGE BUCKETS
 -- =============================================
-INSERT INTO storage.buckets (id, name, public) VALUES ('photos', 'photos', true) ON CONFLICT DO NOTHING;
-INSERT INTO storage.buckets (id, name, public) VALUES ('gallery', 'gallery', true) ON CONFLICT DO NOTHING;
-INSERT INTO storage.buckets (id, name, public) VALUES ('documents', 'documents', false) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('photos', 'photos', true)
+  ON CONFLICT (id) DO NOTHING;
 
--- Storage policies
-CREATE POLICY "Public read photos" ON storage.objects FOR SELECT USING (bucket_id = 'photos');
-CREATE POLICY "Public read gallery" ON storage.objects FOR SELECT USING (bucket_id = 'gallery');
-CREATE POLICY "Admin upload photos" ON storage.objects FOR INSERT USING (auth.role() = 'authenticated' AND bucket_id = 'photos');
-CREATE POLICY "Admin upload gallery" ON storage.objects FOR INSERT USING (auth.role() = 'authenticated' AND bucket_id = 'gallery');
-CREATE POLICY "Admin manage documents" ON storage.objects FOR ALL USING (auth.role() = 'authenticated' AND bucket_id = 'documents');
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('gallery', 'gallery', true)
+  ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('documents', 'documents', false)
+  ON CONFLICT (id) DO NOTHING;
+
+-- =============================================
+-- STORAGE POLICIES
+-- INSERT pada storage.objects harus pakai WITH CHECK
+-- =============================================
+CREATE POLICY "Public read photos"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'photos');
+
+CREATE POLICY "Public read gallery"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'gallery');
+
+CREATE POLICY "Admin insert photos"
+  ON storage.objects FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'photos');
+
+CREATE POLICY "Admin insert gallery"
+  ON storage.objects FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'gallery');
+
+CREATE POLICY "Admin select documents"
+  ON storage.objects FOR SELECT
+  USING (auth.role() = 'authenticated' AND bucket_id = 'documents');
+
+CREATE POLICY "Admin insert documents"
+  ON storage.objects FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'documents');
+
+CREATE POLICY "Admin update documents"
+  ON storage.objects FOR UPDATE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'documents')
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'documents');
+
+CREATE POLICY "Admin delete documents"
+  ON storage.objects FOR DELETE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'documents');
+
+-- Update & delete storage objects (photos & gallery) untuk admin
+CREATE POLICY "Admin update photos"
+  ON storage.objects FOR UPDATE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'photos')
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'photos');
+
+CREATE POLICY "Admin delete photos"
+  ON storage.objects FOR DELETE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'photos');
+
+CREATE POLICY "Admin update gallery objects"
+  ON storage.objects FOR UPDATE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'gallery')
+  WITH CHECK (auth.role() = 'authenticated' AND bucket_id = 'gallery');
+
+CREATE POLICY "Admin delete gallery objects"
+  ON storage.objects FOR DELETE
+  USING (auth.role() = 'authenticated' AND bucket_id = 'gallery');
 
 -- =============================================
 -- SEED DATA
 -- =============================================
 
-INSERT INTO candidates (name, village_name, birth_place, birth_date, bio, quote) VALUES (
+INSERT INTO candidates (name, village_name, birth_place, birth_date, bio, quote)
+VALUES (
   '[NAMA CALON]',
   '[NAMA DESA]',
   '[TEMPAT LAHIR]',
@@ -233,17 +478,22 @@ INSERT INTO candidates (name, village_name, birth_place, birth_date, bio, quote)
   '"Kepemimpinan bukan tentang berada di depan masyarakat, tetapi tentang berjalan bersama masyarakat."'
 ) ON CONFLICT DO NOTHING;
 
-INSERT INTO vision (content) VALUES (
+INSERT INTO vision (content)
+VALUES (
   'Mewujudkan Desa [NAMA DESA] yang maju, transparan, mandiri, dan sejahtera dengan pelayanan yang dekat dengan masyarakat.'
 ) ON CONFLICT DO NOTHING;
 
 INSERT INTO missions (order_number, title, icon, description) VALUES
-  (1, 'Pelayanan', 'shield', 'Memberikan pelayanan desa yang cepat, mudah, gratis, dan dekat dengan masyarakat.'),
-  (2, 'Pemuda', 'users', 'Membangun ruang bagi pemuda untuk berkembang, berdiskusi, berkreasi, dan menyampaikan aspirasi.'),
-  (3, 'Transparansi', 'eye', 'Mendorong pemerintahan desa yang terbuka, amanah, dan dapat dipertanggungjawabkan.')
+  (1, 'Pelayanan',     'shield', 'Memberikan pelayanan desa yang cepat, mudah, gratis, dan dekat dengan masyarakat.'),
+  (2, 'Pemuda',        'users',  'Membangun ruang bagi pemuda untuk berkembang, berdiskusi, berkreasi, dan menyampaikan aspirasi.'),
+  (3, 'Transparansi',  'eye',    'Mendorong pemerintahan desa yang terbuka, amanah, dan dapat dipertanggungjawabkan.')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO programs (slug, tag, title, subtitle, description, problem, solution, how_it_works, benefits, target_beneficiary, icon, color, order_number) VALUES
+INSERT INTO programs (
+  slug, tag, title, subtitle, description,
+  problem, solution, how_it_works, benefits,
+  target_beneficiary, icon, color, order_number
+) VALUES
 (
   'pelayanan-gratis',
   'PELAYANAN DESA',
@@ -255,9 +505,7 @@ INSERT INTO programs (slug, tag, title, subtitle, description, problem, solution
   '["Buka website atau datang ke kantor desa", "Pilih jenis layanan yang dibutuhkan", "Isi formulir secara online atau offline", "Upload dokumen persyaratan", "Verifikasi dan proses oleh petugas", "Surat/dokumen selesai dan dapat diambil"]',
   '["Hemat waktu dan biaya transportasi", "Layanan gratis tanpa pungutan", "Proses lebih cepat dan transparan", "Dapat dipantau secara real-time"]',
   'Seluruh masyarakat Desa [NAMA DESA]',
-  'shield',
-  'emerald',
-  1
+  'shield', 'emerald', 1
 ),
 (
   'pemuda-berdaya',
@@ -270,9 +518,7 @@ INSERT INTO programs (slug, tag, title, subtitle, description, problem, solution
   '["Pembentukan komunitas pemuda aktif", "Penyediaan ruang diskusi dan kreativitas", "Program pelatihan dan pengembangan skill", "Platform digital untuk aspirasi pemuda", "Kegiatan sosial dan kemasyarakatan", "Dukungan untuk UMKM pemuda"]',
   '["Pemuda lebih aktif dalam pembangunan desa", "Tersedia ruang ekspresi dan kreativitas", "Peningkatan skill dan kompetensi", "Jaringan komunitas yang lebih kuat"]',
   'Pemuda Desa [NAMA DESA] usia 15-35 tahun',
-  'users',
-  'gold',
-  2
+  'users', 'gold', 2
 ),
 (
   'desa-transparan',
@@ -285,16 +531,14 @@ INSERT INTO programs (slug, tag, title, subtitle, description, problem, solution
   '["Publikasi APBDes secara real-time di website", "Laporan realisasi program setiap periode", "Dokumentasi kegiatan pembangunan", "Forum aspirasi dan pengaduan masyarakat", "Laporan pertanggungjawaban tahunan"]',
   '["Masyarakat dapat memantau penggunaan anggaran", "Meningkatnya kepercayaan terhadap pemerintah desa", "Akuntabilitas program lebih terukur", "Partisipasi masyarakat dalam pengawasan meningkat"]',
   'Seluruh masyarakat Desa [NAMA DESA]',
-  'eye',
-  'blue',
-  3
+  'eye', 'blue', 3
 )
 ON CONFLICT (slug) DO NOTHING;
 
 INSERT INTO timelines (year, title, description, order_number) VALUES
-  ('2010', 'Pendidikan', 'Menyelesaikan pendidikan formal dengan prestasi akademik yang baik.', 1),
-  ('2015', 'Pengalaman Organisasi', 'Aktif dalam berbagai organisasi kemasyarakatan di tingkat desa dan kecamatan.', 2),
-  ('2018', 'Kegiatan Masyarakat', 'Terlibat langsung dalam berbagai kegiatan sosial dan pemberdayaan masyarakat.', 3),
-  ('2022', 'Pengabdian Desa', 'Mengabdi dan berkontribusi aktif dalam pembangunan desa.', 4),
+  ('2010', 'Pendidikan',              'Menyelesaikan pendidikan formal dengan prestasi akademik yang baik.', 1),
+  ('2015', 'Pengalaman Organisasi',   'Aktif dalam berbagai organisasi kemasyarakatan di tingkat desa dan kecamatan.', 2),
+  ('2018', 'Kegiatan Masyarakat',     'Terlibat langsung dalam berbagai kegiatan sosial dan pemberdayaan masyarakat.', 3),
+  ('2022', 'Pengabdian Desa',         'Mengabdi dan berkontribusi aktif dalam pembangunan desa.', 4),
   ('2026', 'Maju Sebagai Calon Kepala Desa', 'Dengan dukungan masyarakat, maju sebagai calon kepala desa untuk membawa perubahan nyata.', 5)
 ON CONFLICT DO NOTHING;
